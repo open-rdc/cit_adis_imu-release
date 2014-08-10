@@ -3,18 +3,11 @@
   <param name="robot_description"
          command="$(find xacro)/xacro.py '$(find t_frog_description)/urdf/t_frog.xacro'" />
 
-  <!-- Start t_frog driver -->
   <node name="t_frog_driver_node"
       pkg="t_frog_driver"
       output="screen"
       type="t_frog_driver_node"/>
-
-  <!-- Load controller config -->
-  <rosparam command="load" file="$(find t_frog_control)/config/t_frog_control.yaml" />
-
-  <!-- Spawn controller -->
-  <node name="controller_spawner"
-        pkg="controller_manager" type="spawner" output="screen"
-        args="t_frog" />
+  
+  <include file="$(find t_frog_control)/launch/t_frog_control.launch" />
   
 </launch>
