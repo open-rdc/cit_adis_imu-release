@@ -3,10 +3,9 @@
   <param name="robot_description"
          command="$(find xacro)/xacro.py '$(find t_frog_description)/urdf/t_frog.xacro'" />
 
-  <node name="t_frog_driver_node"
-      pkg="t_frog_driver"
-      output="screen"
-      type="t_frog_driver_node"/>
+  <node name="t_frog_driver_node" pkg="t_frog_driver" output="screen" type="t_frog_driver_node">
+    <remap from="/joint_states" to="/t_frog/joint_states" />
+  </node>
   
   <include file="$(find t_frog_control)/launch/t_frog_control.launch" />
   
