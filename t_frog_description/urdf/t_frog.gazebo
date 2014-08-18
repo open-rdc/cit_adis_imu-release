@@ -10,8 +10,8 @@
 
   <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <robotNamespace>/t_frog</robotNamespace>
-      <publishWheelTF>true</publishWheelTF>
+      <!--robotNamespace>/t_frog</robotNamespace-->
+      <publishWheelTF>false</publishWheelTF>
       <publishWheelJointState>true</publishWheelJointState>
       <wheelAcceleration>0</wheelAcceleration>
       <wheelTorque>5</wheelTorque>
@@ -87,7 +87,7 @@
         </noise>
       </ray>
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
-        <topicName>/t_frog/laser/scan</topicName>
+        <topicName>/laser/scan</topicName>
         <frameName>hokuyo_link</frameName>
       </plugin>
     </sensor>
@@ -120,7 +120,7 @@
       <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
         <alwaysOn>true</alwaysOn>
         <updateRate>0.0</updateRate>
-        <cameraName>t_frog/camera1</cameraName>
+        <cameraName>camera1</cameraName>
         <imageTopicName>image_raw</imageTopicName>
         <cameraInfoTopicName>camera_info</cameraInfoTopicName>
         <frameName>camera_link</frameName>
