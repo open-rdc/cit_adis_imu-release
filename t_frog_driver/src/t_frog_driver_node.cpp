@@ -6,11 +6,23 @@
 #include <hardware_interface/robot_hw.h>
 #include <realtime_tools/realtime_buffer.h>
 
+extern "C"{
+#include <unistd.h>
+#include <math.h>
+#include <ypspur.h>
+}
+
 class TFrog : public hardware_interface::RobotHW
 {
 public:
-  TFrog()
-  {
+  TFrog(){
+    if(Spur_init() < 0){
+      ROS_WARN_STREAM("ERROR : cannot open spur.\n");
+    }
+
+    YP_set_wheel_vel(3.0, 3.0);
+    YP_set_wheel_accel(2.0, 2.0);
+
     pos_[0] = 0.0; pos_[1] = 0.0;
     vel_[0] = 0.0; vel_[1] = 0.0;
     eff_[0] = 0.0; eff_[1] = 0.0;
@@ -33,12 +45,19 @@ public:
     registerInterface(&jnt_vel_interface_);
   }
 
+  ~TFrog(){
+    Spur_stop();
+    usleep(40000000);
+    Spur_free();
+  }
+
   ros::Time getTime() const {return ros::Time::now();}
   ros::Duration getPeriod() const {return ros::Duration(0.01);}
 
   void read()
   {
     ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << cmd_[1]);
+    YP_wheel_vel(-cmd_[0], cmd_[1]);
   }
 
   void write()
@@ -61,9 +80,11 @@ private:
 
 int main(int argc, char **argv)
 {
+  double x, y, theta;
+  
   ros::init(argc, argv, "t_frog");
   ros::NodeHandle nh;
-
+    
   TFrog robot;
   ROS_WARN_STREAM("period: " << robot.getPeriod().toSec());
   controller_manager::ControllerManager cm(&robot, nh);
@@ -71,6 +92,7 @@ int main(int argc, char **argv)
   ros::Rate rate(1.0 / robot.getPeriod().toSec());
   ros::AsyncSpinner spinner(1);
   spinner.start();
+
   while(ros::ok())
   {
     robot.read();
