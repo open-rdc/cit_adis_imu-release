@@ -4,8 +4,8 @@ joint_state_controller:
 
 t_frog:
     type        : "diff_drive_controller/DiffDriveController"
-    left_wheel  : 'left_wheel_hinge'
-    right_wheel : 'right_wheel_hinge'
+    left_wheel  : 'right_wheel_hinge'
+    right_wheel : 'left_wheel_hinge'
     publish_rate: 50  # default: 50
     pose_covariance_diagonal : [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
     twist_covariance_diagonal: [0.001, 0.001, 1000000.0, 1000000.0, 1000000.0, 1000.0]
