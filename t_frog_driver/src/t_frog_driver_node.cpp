@@ -56,8 +56,8 @@ public:
 
   void read()
   {
-    ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << cmd_[1]);
-    YP_wheel_vel(-cmd_[0], cmd_[1]);
+    ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << -cmd_[1]);
+    YP_wheel_vel(cmd_[0], -cmd_[1]);
   }
 
   void write()
