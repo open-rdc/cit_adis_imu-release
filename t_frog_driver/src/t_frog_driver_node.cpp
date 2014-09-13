@@ -20,8 +20,8 @@ public:
       ROS_WARN_STREAM("ERROR : cannot open spur.\n");
     }
 
-    YP_set_wheel_vel(3.0, 3.0);
-    YP_set_wheel_accel(2.0, 2.0);
+    YP_set_wheel_vel(9.0, 9.0);
+    YP_set_wheel_accel(9.0, 9.0);
 
     pos_[0] = 0.0; pos_[1] = 0.0;
     vel_[0] = 0.0; vel_[1] = 0.0;
