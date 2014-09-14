@@ -43,9 +43,13 @@
   <build_depend>roscpp</build_depend>
   <build_depend>hardware_interface</build_depend>
   <build_depend>controller_manager</build_depend>
+  <build_depend>teleop_twist_joy</build_depend>
+  <build_depend>joy</build_depend>
   <run_depend>controller_manager</run_depend>
   <run_depend>hardware_interface</run_depend>
   <run_depend>roscpp</run_depend>
+  <run_depend>teleop_twist_joy</run_depend>
+  <run_depend>joy</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
