@@ -25,8 +25,8 @@ t_frog:
     linear:
       x:
         has_velocity_limits    : true
-        max_velocity           : 0.3  # m/s
-        min_velocity           : -0.5 # m/s
+        max_velocity           : 0.9  # m/s
+        min_velocity           : -0.9 # m/s
         has_acceleration_limits: true
         max_acceleration       : 1.7  # m/s^2
         min_acceleration       : -0.4 # m/s^2
