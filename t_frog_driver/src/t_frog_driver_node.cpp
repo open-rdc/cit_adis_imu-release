@@ -53,11 +53,25 @@ public:
 
   ros::Time getTime() const {return ros::Time::now();}
   ros::Duration getPeriod() const {return ros::Duration(0.01);}
+  
+  void reopen(){
+    Spur_free();
+    ros::Duration(0.5).sleep();
+    Spur_init();
+    YP_set_wheel_vel(9.0, 9.0);
+    YP_set_wheel_accel(9.0, 9.0);
+  }
 
   void read()
   {
     ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << -cmd_[1]);
-    YP_wheel_vel(cmd_[0], -cmd_[1]);
+    int ret = YP_wheel_vel(cmd_[0], -cmd_[1]);
+    ROS_INFO_STREAM("ret: " << ret);
+
+    if(ret == -1){
+        ROS_WARN_STREAM("ERROR : cannot open spur.\n");
+        reopen();
+    }
   }
 
   void write()
