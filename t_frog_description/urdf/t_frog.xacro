@@ -39,16 +39,23 @@
     <collision name="collision">
       <origin xyz="-0.175 0.0 0.05" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder  length="0.03" radius="0.05"/>
+        <cylinder  length="0.03" radius="0.04625"/>
       </geometry>
     </collision>
     <visual name="visual">
       <origin xyz="-0.175 0.0 0.05" rpy="0 1.5707 1.5707"/>
       <geometry>
-        <cylinder  length="0.03" radius="0.05"/>
+        <cylinder  length="0.03" radius="0.04625"/>
       </geometry>
     </visual>
     
+    <collision name="collision">
+      <origin xyz="0.175 0.0 0.05" rpy="0 1.5707 1.5707"/>
+      <geometry>
+        <cylinder  length="0.03" radius="0.04625"/>
+      </geometry>
+    </collision>
+
     <inertial>
        <mass value="20" />
        <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -56,6 +63,22 @@
     </inertial>
   </link>
 
+  <link name="visual_left_wheel">
+    <visual name="visual">
+      <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
+      <geometry>
+        <cylinder  length="0.03" radius="0.0725"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint type="fixed" name="visual_left_wheel_hinge">
+    <origin xyz="0.15 0.15 0.075" rpy="0 0 0"/>
+    <child link="visual_left_wheel">visual_left_wheel</child>
+    <parent link="base_link">base_link</parent>
+    <axis xyz="0 1 0"/>
+  </joint>
+  
   <link name="left_wheel">
     <collision name="collision">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
@@ -63,12 +86,12 @@
          <cylinder  length="0.03" radius="0.0725"/>
       </geometry>
     </collision>
-    <visual name="visual">
+    <!--visual name="visual">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
         <cylinder  length="0.03" radius="0.0725"/>
       </geometry>
-    </visual>
+    </visual-->
     <inertial>
       <mass value="1" />
       <origin xyz="0 0.0 0"/>
@@ -83,6 +106,22 @@
     <axis xyz="0 1 0"/>
     <limit effort="100" velocity="100.0"  lower="-1000" upper="1000" />
   </joint> 
+
+  <link name="visual_right_wheel">
+    <visual name="visual">
+      <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
+      <geometry>
+        <cylinder  length="0.03" radius="0.0725"/>
+      </geometry>
+    </visual>
+  </link>
+
+  <joint type="fixed" name="visual_right_wheel_hinge">
+    <origin xyz="0.15 -0.15 0.075" rpy="0 0 0"/>
+    <child link="visual_right_wheel">visual_right_wheel</child>
+    <parent link="base_link">base_link</parent>
+    <axis xyz="0 1 0"/>
+  </joint>
   
   <link name="right_wheel">
     <collision name="collision">
@@ -91,12 +130,12 @@
          <cylinder  length="0.03" radius="0.0725"/>
       </geometry>
     </collision>
-    <visual name="visual">
+    <!--visual name="visual">
       <origin xyz="0 0.0 0" rpy="0 1.5707 1.5707"/>
       <geometry>
         <cylinder  length="0.03" radius="0.0725"/>
       </geometry>
-    </visual>
+    </visual-->
     <inertial>
       <mass value="1" />
       <origin xyz="0 0.0 0"/>
