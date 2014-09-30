@@ -109,14 +109,14 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.01
       Style: Flat Squares
-      Topic: /t_frog/laser/scan
+      Topic: /icart_mini/laser/scan
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
     - Class: rviz/Camera
       Enabled: true
       Image Rendering: background and overlay
-      Image Topic: /t_frog/camera1/image_raw
+      Image Topic: /icart_mini/camera1/image_raw
       Name: Camera
       Overlay Alpha: 0.5
       Queue Size: 2

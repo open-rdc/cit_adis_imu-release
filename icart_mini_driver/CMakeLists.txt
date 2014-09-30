@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(t_frog_driver)
+project(icart_mini_driver)
 
 find_package(catkin REQUIRED COMPONENTS
     roscpp 
@@ -9,7 +9,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES t_frog_driver
+#  LIBRARIES icart_mini_driver
 #  CATKIN_DEPENDS other_catkin_pkg
 #  DEPENDS system_lib
 )
@@ -18,9 +18,9 @@ catkin_package(
 
 include_directories(${catkin_INCLUDE_DIRS})
 
-add_executable(t_frog_driver_node src/t_frog_driver_node.cpp)
+add_executable(icart_mini_driver_node src/icart_mini_driver_node.cpp)
 
-target_link_libraries(t_frog_driver_node
+target_link_libraries(icart_mini_driver_node
     /usr/local/lib/libypspur.a
     ${catkin_LIBRARIES}
 )

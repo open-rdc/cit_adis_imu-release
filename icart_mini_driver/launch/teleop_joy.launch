@@ -9,6 +9,6 @@
     </node>
 
     <node pkg="teleop_twist_joy" name="teleop_twist_joy" type="teleop_node">
-        <rosparam command="load" file="$(find t_frog_driver)/config/$(arg joy_config).yaml" />
+        <rosparam command="load" file="$(find icart_mini_driver)/config/$(arg joy_config).yaml" />
     </node>
 </launch>
