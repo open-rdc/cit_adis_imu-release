@@ -4,13 +4,13 @@
   <!-- ros_control plugin -->
   <!--gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-      <robotNamespace>/t_frog</robotNamespace>
+      <robotNamespace>/icart_mini</robotNamespace>
     </plugin>
   </gazebo-->
 
   <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <!--robotNamespace>/t_frog</robotNamespace-->
+      <!--robotNamespace>/icart_mini</robotNamespace-->
       <publishWheelTF>false</publishWheelTF>
       <publishWheelJointState>true</publishWheelJointState>
       <wheelAcceleration>0</wheelAcceleration>

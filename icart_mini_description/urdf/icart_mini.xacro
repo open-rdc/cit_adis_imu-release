@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <!-- Revolute-Revolute Manipulator -->
-<robot name="t_frog" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot name="icart_mini" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
   <!-- Constants for robot dimensions -->
   <xacro:property name="PI" value="3.1415926535897931"/>
   <xacro:property name="camera_link" value="0.05"/> <!-- Size of square 'camera' box -->
   <xacro:property name="hokuyo_link" value="0.1" /> <!-- Size of square 'hokuyo' box -->
 
   <!-- Import all Gazebo-customization elements, including Gazebo colors -->
-  <xacro:include filename="$(find t_frog_description)/urdf/t_frog.gazebo" />
+  <xacro:include filename="$(find icart_mini_description)/urdf/icart_mini.gazebo" />
   <!-- Import Rviz colors -->
-  <xacro:include filename="$(find t_frog_description)/urdf/materials.xacro" />
+  <xacro:include filename="$(find icart_mini_description)/urdf/materials.xacro" />
 
   <!-- Used for fixing robot to Gazebo 'base_link' -->
   <!--link name="world"/>
@@ -169,7 +169,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://t_frog_description/meshes/hokuyo.dae"/>
+        <mesh filename="package://icart_mini_description/meshes/hokuyo.dae"/>
       </geometry>
     </visual>
 

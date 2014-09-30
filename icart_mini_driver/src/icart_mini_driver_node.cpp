@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 {
   double x, y, theta;
   
-  ros::init(argc, argv, "t_frog");
+  ros::init(argc, argv, "icart_mini");
   ros::NodeHandle nh;
     
   TFrog robot;
