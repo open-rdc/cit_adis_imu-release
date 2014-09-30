@@ -2,7 +2,7 @@ joint_state_controller:
     type: joint_state_controller/JointStateController
     publish_rate: 50
 
-t_frog:
+icart_mini:
     type        : "diff_drive_controller/DiffDriveController"
     left_wheel  : 'right_wheel_hinge'
     right_wheel : 'left_wheel_hinge'
