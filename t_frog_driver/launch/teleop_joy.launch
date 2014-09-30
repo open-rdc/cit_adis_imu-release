@@ -1,6 +1,4 @@
 <launch>
-    <include file="$(find t_frog_driver)/launch/t_frog_drive.launch" />
-    
     <arg name="joy_config" default="elecom_joy" />
     <arg name="joy_dev" default="/dev/input/js0" />
       
