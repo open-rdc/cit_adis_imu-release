@@ -104,7 +104,7 @@
     <child link="left_wheel">left_wheel</child>
     <parent link="base_link">base_link</parent>
     <axis xyz="0 1 0"/>
-    <limit effort="100" velocity="100.0"  lower="-1000" upper="1000" />
+    <limit effort="100" velocity="100.0"  lower="-5000" upper="5000" />
   </joint> 
 
   <link name="visual_right_wheel">
@@ -148,7 +148,7 @@
     <child link="right_wheel">right_wheel</child>
     <parent link="base_link">base_link</parent>
     <axis xyz="0 1 0"/>
-    <limit effort="100" velocity="100.0"  lower="-1000" upper="1000" />
+    <limit effort="100" velocity="100.0"  lower="-5000" upper="5000" />
   </joint>
 
   <joint name="hokuyo_joint" type="fixed">

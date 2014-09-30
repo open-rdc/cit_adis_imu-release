@@ -1,7 +1,16 @@
+<?xml version="1.0"?>
+
 <launch>
-  <!-- Load t_frog model -->
+  <arg name="scan_frame" default="/hokuyo_link"/>
+  <arg name="scan_dev" default="/dev/sensors/hokuyo_urg"/>
+  
   <param name="robot_description"
          command="$(find xacro)/xacro.py '$(find t_frog_description)/urdf/t_frog.xacro'" />
+  
+  <node pkg="hokuyo_node" type="hokuyo_node" name="hokuyo_node">
+    <param name="frame_id" value="$(arg scan_frame)"/>
+    <param name="port" value="$(arg scan_dev)"/>
+  </node>
 
   <node name="t_frog_driver_node" pkg="t_frog_driver" output="screen" type="t_frog_driver_node">
     <remap from="t_frog/odom" to="odom"/>
