@@ -2,24 +2,24 @@
 <robot>
 
   <!-- ros_control plugin -->
-  <!--gazebo>
+  <gazebo>
     <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
       <robotSimType>icart_mini_gazebo/ICartMiniHWSim</robotSimType>
     </plugin>
-  </gazebo-->
+  </gazebo>
 
   <gazebo>
     <plugin name="imu_sensor_controller" filename="libgazebo_ros_imu.so">
     <bodyName>camera_link</bodyName>
     <alwaysOn>true</alwaysOn>
-    <topicName>imu</topicName>
-    <serviceName>imu_service</serviceName>
+    <topicName>/icart_mini/imu</topicName>
+    <serviceName>/icart_mini/imu_service</serviceName>
     <gaussianNoise>0.0</gaussianNoise>
-    <updateRate>10</updateRate>
+    <updateRate>100</updateRate>
     </plugin>
   </gazebo>
 
-  <gazebo>
+  <!--gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
       <publishWheelTF>false</publishWheelTF>
       <publishWheelJointState>true</publishWheelJointState>
@@ -36,7 +36,7 @@
       <odometryFrame>/odom</odometryFrame>
       <robotBaseFrame>base_link</robotBaseFrame>
     </plugin>
-  </gazebo>
+  </gazebo-->
 
   <!-- Left Wheel -->
   <gazebo reference="left_wheel">
