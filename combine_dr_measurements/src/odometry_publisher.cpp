@@ -3,6 +3,8 @@
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/Imu.h>
 
+#include <realtime_tools/realtime_buffer.h>
+
 class OdometryPublisher
 {
 
@@ -16,11 +18,13 @@ public:
     }
 
     void odom_cb(const nav_msgs::OdometryConstPtr &msg){
-        received_odom_ = msg;
+        received_odom_msg_ = *msg;
+        received_odom_.writeFromNonRT(received_odom_msg_);
     }
 
     void imu_cb(const sensor_msgs::ImuConstPtr &msg){
-        received_imu_ = msg;
+        received_imu_msg_ = *msg;
+        received_imu_.writeFromNonRT(received_imu_msg_);
     }
 
     void run(){
@@ -28,25 +32,27 @@ public:
         tf::TransformBroadcaster odom_broadcaster;
 
         while(nh_.ok()){
-            if(received_odom_ && received_imu_){
+            nav_msgs::Odometry *odom = received_odom_.readFromRT();
+            sensor_msgs::Imu *imu = received_imu_.readFromRT();
+
+            if(odom && imu){
                 ros::Time time = ros::Time::now();
-                ROS_INFO_STREAM("time = " << time);
-                ROS_INFO_STREAM("received_odom.stamp = " << received_odom_->header.stamp);
-                ROS_INFO_STREAM("received_imu.stamp = " << received_imu_->header.stamp);
-                nav_msgs::Odometry odom = *received_odom_;
+                ROS_INFO_STREAM("received_odom.stamp = " << odom->header.stamp);
+                ROS_INFO_STREAM("received_imu.stamp = " << imu->header.stamp);
                 geometry_msgs::TransformStamped odom_trans;
 
-                odom.header.stamp    = odom_trans.header.stamp = time;
-                odom.header.frame_id = odom_trans.header.frame_id = "odom";
-                odom.child_frame_id  = odom_trans.child_frame_id  = "base_link";
+                odom->header.stamp    = odom_trans.header.stamp = time;
+                odom->header.frame_id = odom_trans.header.frame_id = "odom";
+                odom->child_frame_id  = odom_trans.child_frame_id  = "base_link";
                 
-                odom.pose.pose.orientation = odom_trans.transform.rotation = received_imu_->orientation;
-                odom_trans.transform.translation.x = odom.pose.pose.position.x;
-                odom_trans.transform.translation.y = odom.pose.pose.position.y;
-                odom_trans.transform.translation.z = odom.pose.pose.position.z;
+                odom->pose.pose.orientation = odom_trans.transform.rotation = imu->orientation;
+               
+                odom_trans.transform.translation.x = odom->pose.pose.position.x;
+                odom_trans.transform.translation.y = odom->pose.pose.position.y;
+                odom_trans.transform.translation.z = odom->pose.pose.position.z;
 
                 odom_broadcaster.sendTransform(odom_trans);
-                odom_pub_.publish(odom);
+                odom_pub_.publish(*odom);
             }
             
             ros::spinOnce();
@@ -58,9 +64,11 @@ private:
     ros::Publisher odom_pub_;
     ros::Subscriber odom_sub_;
     ros::Subscriber imu_sub_;
-    nav_msgs::OdometryConstPtr received_odom_;
-    sensor_msgs::ImuConstPtr received_imu_;
-    //ros::Duration max_tolerance_;
+
+    nav_msgs::Odometry received_odom_msg_;
+    sensor_msgs::Imu received_imu_msg_;
+    realtime_tools::RealtimeBuffer<nav_msgs::Odometry> received_odom_;
+    realtime_tools::RealtimeBuffer<sensor_msgs::Imu> received_imu_;
     ros::NodeHandle &nh_;
 
 };
