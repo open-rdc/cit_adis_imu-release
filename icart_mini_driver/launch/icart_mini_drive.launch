@@ -12,10 +12,7 @@
     <param name="port" value="$(arg scan_dev)"/>
   </node>
 
-  <node name="icart_mini_driver_node" pkg="icart_mini_driver" output="screen" type="icart_mini_driver_node">
-    <remap from="icart_mini/odom" to="odom"/>
-    <remap from="icart_mini/cmd_vel" to="cmd_vel"/>
-  </node>
+  <node name="icart_mini_driver_node" pkg="icart_mini_driver" output="screen" type="icart_mini_driver_node"/>
   
   <include file="$(find icart_mini_control)/launch/icart_mini_control.launch" />
   

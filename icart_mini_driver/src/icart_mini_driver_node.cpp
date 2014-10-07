@@ -65,7 +65,8 @@ public:
   void read()
   {
     ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << -cmd_[1]);
-    int ret = YP_wheel_vel(cmd_[0], -cmd_[1]);
+    //int ret = YP_wheel_vel(cmd_[0], -cmd_[1]);
+    int ret = YP_wheel_vel(cmd_[1], -cmd_[0]);
     ROS_INFO_STREAM("ret: " << ret);
 
     if(ret == -1){
