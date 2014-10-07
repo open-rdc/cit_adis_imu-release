@@ -1,18 +1,13 @@
+#include <combine_dr_measurements/odometry_publisher.h>
+
 #include <complex>
 
-#include <ros/ros.h>
 #include <tf/transform_broadcaster.h>
 #include <tf/LinearMath/Quaternion.h>
-#include <nav_msgs/Odometry.h>
-#include <sensor_msgs/Imu.h>
 
-#include <realtime_tools/realtime_buffer.h>
+namespace combine_dr_measurements{
 
-class OdometryPublisher
-{
-
-public:
-    OdometryPublisher(ros::NodeHandle &nh) : 
+    OdometryPublisher::OdometryPublisher(ros::NodeHandle &nh) : 
         nh_(nh)
     {
         odom_pub_ = nh_.advertise<nav_msgs::Odometry>("combined_odom", 5, this);
@@ -20,17 +15,17 @@ public:
         imu_sub_ = nh_.subscribe("imu", 1, &OdometryPublisher::imu_cb, this);
     }
 
-    void odom_cb(const nav_msgs::OdometryConstPtr &msg){
+    void OdometryPublisher::odom_cb(const nav_msgs::OdometryConstPtr &msg){
         received_odom_msg_ = *msg;
         received_odom_.writeFromNonRT(received_odom_msg_);
     }
 
-    void imu_cb(const sensor_msgs::ImuConstPtr &msg){
+    void OdometryPublisher::imu_cb(const sensor_msgs::ImuConstPtr &msg){
         received_imu_msg_ = *msg;
         received_imu_.writeFromNonRT(received_imu_msg_);
     }
 
-    void run(){
+    void OdometryPublisher::run(){
         ros::Rate r(100.0);
         tf::TransformBroadcaster odom_broadcaster;
         nav_msgs::Odometry old_odom;
@@ -116,25 +111,13 @@ public:
             r.sleep();
         }
     }
-
-private:
-    ros::Publisher odom_pub_;
-    ros::Subscriber odom_sub_;
-    ros::Subscriber imu_sub_;
-
-    nav_msgs::Odometry received_odom_msg_;
-    sensor_msgs::Imu received_imu_msg_;
-    realtime_tools::RealtimeBuffer<nav_msgs::Odometry> received_odom_;
-    realtime_tools::RealtimeBuffer<sensor_msgs::Imu> received_imu_;
-    ros::NodeHandle &nh_;
-
-};
+}; //namespace combine_dr_measurements
 
 int main(int argc, char *argv[]){
     ros::init(argc, argv, "combine_dr_measurements");
 
     ros::NodeHandle n;
-    OdometryPublisher odom_publisher(n);
+    combine_dr_measurements::OdometryPublisher odom_publisher(n);
     odom_publisher.run();
 
 }
