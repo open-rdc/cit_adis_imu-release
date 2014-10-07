@@ -36,14 +36,7 @@ namespace combine_dr_measurements{
             sensor_msgs::Imu *imu = received_imu_.readFromRT();
 
             if(odom && imu){
-                if(!has_initialized_odom){
-                    if(odom->header.stamp.toSec() > 0.001){
-                        ROS_INFO_STREAM("old_odom = " << old_odom);
-                        ROS_INFO_STREAM("odom = " << *odom);
-                        old_odom = *odom;
-                        has_initialized_odom = true;
-                    }
-                }else{
+                if(has_initialized_odom && odom->header.stamp.toSec() > 0.001 && imu->header.stamp.toSec() > 0.001){
                     ros::Time time = ros::Time::now();
                     geometry_msgs::TransformStamped odom_trans;
 
@@ -104,6 +97,13 @@ namespace combine_dr_measurements{
                     odom_pub_.publish(*odom);
                        
                     old_odom = *odom;
+                }else{
+                    if(odom->header.stamp.toSec() > 0.001){
+                        ROS_INFO_STREAM("old_odom = " << old_odom);
+                        ROS_INFO_STREAM("odom = " << *odom);
+                        old_odom = *odom;
+                        has_initialized_odom = true;
+                    }
                 }
             }
             
