@@ -9,13 +9,13 @@ find_package(catkin REQUIRED COMPONENTS
 )
 
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES combine_dr_measurements
-#  CATKIN_DEPENDS other_catkin_pkg
-#  DEPENDS system_lib
+  INCLUDE_DIRS include
+  LIBRARIES ${PROJECT_NAME}
 )
 
-include_directories(${catkin_INCLUDE_DIRS})
+include_directories(
+  include ${catkin_INCLUDE_DIRS}
+)
 
 add_executable(odometry_publisher src/odometry_publisher.cpp)
 
