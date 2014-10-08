@@ -15,7 +15,6 @@ namespace combine_dr_measurements{
         imu_sub_ = nh_.subscribe("imu", 1, &OdometryPublisher::imu_cb, this);
         ros::NodeHandle private_nh("~");
         private_nh.param<double>("max_update_rate", max_update_rate_, 50);
-        ROS_ERROR_STREAM("max_update_rate = " << max_update_rate_);
     }
 
     void OdometryPublisher::odom_cb(const nav_msgs::OdometryConstPtr &msg){
@@ -52,7 +51,7 @@ namespace combine_dr_measurements{
                     ROS_INFO_STREAM("diff = " << diff);
 
                     if(dt < 0.001){
-                        ROS_ERROR_STREAM("dt = " << dt);
+                        ROS_WARN_STREAM("Interval too small to integrate with");
                         
                         //old_odom.pose.pose.orientation = odom->pose.pose.orientation;
                         //old_odom.pose.pose.position = odom->pose.pose.position;
