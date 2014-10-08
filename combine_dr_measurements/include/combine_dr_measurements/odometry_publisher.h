@@ -26,7 +26,7 @@ namespace combine_dr_measurements{
         realtime_tools::RealtimeBuffer<nav_msgs::Odometry> received_odom_;
         realtime_tools::RealtimeBuffer<sensor_msgs::Imu> received_imu_;
         ros::NodeHandle &nh_;
-
+        double max_update_rate_;
     };
 
 };

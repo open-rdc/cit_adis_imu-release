@@ -13,6 +13,9 @@ namespace combine_dr_measurements{
         odom_pub_ = nh_.advertise<nav_msgs::Odometry>("combined_odom", 5, this);
         odom_sub_ = nh_.subscribe("odom", 1, &OdometryPublisher::odom_cb, this);
         imu_sub_ = nh_.subscribe("imu", 1, &OdometryPublisher::imu_cb, this);
+        ros::NodeHandle private_nh("~");
+        private_nh.param<double>("max_update_rate", max_update_rate_, 50);
+        ROS_ERROR_STREAM("max_update_rate = " << max_update_rate_);
     }
 
     void OdometryPublisher::odom_cb(const nav_msgs::OdometryConstPtr &msg){
@@ -26,7 +29,7 @@ namespace combine_dr_measurements{
     }
 
     void OdometryPublisher::run(){
-        ros::Rate r(100.0);
+        ros::Rate r(max_update_rate_);
         tf::TransformBroadcaster odom_broadcaster;
         nav_msgs::Odometry old_odom;
         bool has_initialized_odom = false;
@@ -53,8 +56,8 @@ namespace combine_dr_measurements{
                         
                         //old_odom.pose.pose.orientation = odom->pose.pose.orientation;
                         //old_odom.pose.pose.position = odom->pose.pose.position;
-                        odom->pose.pose.orientation = old_odom.pose.pose.orientation;
-                        odom->pose.pose.position = old_odom.pose.pose.position;
+                        //odom->pose.pose.orientation = old_odom.pose.pose.orientation;
+                        //odom->pose.pose.position = old_odom.pose.pose.position;
                     }else{
                         odom->pose.pose.orientation = odom_trans.transform.rotation = imu->orientation;
                         
@@ -87,16 +90,17 @@ namespace combine_dr_measurements{
                             odom->pose.pose.position.x = old_odom.pose.pose.position.x + r * (sin(yaw) - sin(old_yaw));
                             odom->pose.pose.position.y = old_odom.pose.pose.position.y - r * (cos(yaw) - cos(old_yaw));
                         }
+
+                        odom_trans.transform.translation.x = odom->pose.pose.position.x;
+                        odom_trans.transform.translation.y = odom->pose.pose.position.y;
+                        odom_trans.transform.translation.z = odom->pose.pose.position.z;
+
+                        odom_broadcaster.sendTransform(odom_trans);
+                        odom_pub_.publish(*odom);
+                           
+                        old_odom = *odom;
                     }
 
-                    odom_trans.transform.translation.x = odom->pose.pose.position.x;
-                    odom_trans.transform.translation.y = odom->pose.pose.position.y;
-                    odom_trans.transform.translation.z = odom->pose.pose.position.z;
-
-                    odom_broadcaster.sendTransform(odom_trans);
-                    odom_pub_.publish(*odom);
-                       
-                    old_odom = *odom;
                 }else{
                     if(odom->header.stamp.toSec() > 0.001){
                         ROS_INFO_STREAM("old_odom = " << old_odom);
