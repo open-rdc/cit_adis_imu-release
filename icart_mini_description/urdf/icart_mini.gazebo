@@ -15,7 +15,7 @@
     <topicName>/icart_mini/imu</topicName>
     <serviceName>/icart_mini/imu_service</serviceName>
     <gaussianNoise>0.0</gaussianNoise>
-    <updateRate>100</updateRate>
+    <updateRate>30</updateRate>
     </plugin>
   </gazebo>
 
