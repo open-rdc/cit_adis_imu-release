@@ -1,13 +1,13 @@
 joint_state_controller:
     type: joint_state_controller/JointStateController
-    publish_rate: 100
+    publish_rate: 30
 
 icart_mini:
     #type: "icart_mini_controller/ICartMiniController"
     type        : "diff_drive_controller/DiffDriveController"
     left_wheel  : 'left_wheel_hinge'
     right_wheel : 'right_wheel_hinge'
-    publish_rate: 100
+    publish_rate: 30
     
     enable_odom_tf: false
     
