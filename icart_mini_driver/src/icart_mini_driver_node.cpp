@@ -56,31 +56,22 @@ public:
   
   void reopen(){
     Spur_free();
-    ros::Duration(0.5).sleep();
+    //ros::Duration(0.5).sleep();
     Spur_init();
     YP_set_wheel_vel(9.0, 9.0);
     YP_set_wheel_accel(9.0, 9.0);
   }
 
-  void read()
-  {
-    ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << -cmd_[1]);
-    //int ret = YP_wheel_vel(cmd_[0], -cmd_[1]);
+  void read(){
+    //ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << -cmd_[1]);
     int ret = YP_wheel_vel(cmd_[1], -cmd_[0]);
-    ROS_INFO_STREAM("ret: " << ret);
-
-    if(ret == -1){
-        ROS_WARN_STREAM("ERROR : cannot open spur.\n");
-        reopen();
-    }
   }
 
-  void write()
-  {
+  void write(){
     for (unsigned int i = 0; i < 2; ++i)
     {
-      pos_[i] += vel_[i]*getPeriod().toSec(); // update position
-      vel_[i] = cmd_[i]; // might add smoothing here later
+      pos_[i] += vel_[i]*getPeriod().toSec();
+      vel_[i] = cmd_[i];
     }
   }
 
@@ -110,9 +101,16 @@ int main(int argc, char **argv)
 
   while(ros::ok())
   {
-    robot.read();
+    int state = YP_get_error_state();
+    if(state == 0){
+        robot.read();
+        robot.write();
+    }else{
+        ROS_WARN("Disconnected T-frog driver");
+        robot.reopen();
+    }
+    
     cm.update(robot.getTime(), robot.getPeriod());
-    robot.write();
     rate.sleep();
   }
   spinner.stop();
