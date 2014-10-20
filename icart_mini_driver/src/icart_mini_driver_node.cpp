@@ -68,10 +68,14 @@ public:
   }
 
   void write(){
+    double yp_vel[2];
+    YP_get_wheel_vel(&yp_vel[1], &yp_vel[0]);
+    yp_vel[0] = -yp_vel[0];
+
     for (unsigned int i = 0; i < 2; ++i)
     {
-      pos_[i] += vel_[i]*getPeriod().toSec();
-      vel_[i] = cmd_[i];
+      pos_[i] += yp_vel[i] * getPeriod().toSec();
+      vel_[i] = yp_vel[i];
     }
   }
 
