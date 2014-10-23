@@ -55,6 +55,7 @@ public:
   ros::Duration getPeriod() const {return ros::Duration(0.01);}
   
   void reopen(){
+    YP_wheel_vel(0, 0);
     Spur_free();
     //ros::Duration(0.5).sleep();
     Spur_init();
@@ -69,6 +70,8 @@ public:
 
   void write(){
     double yp_vel[2];
+    yp_vel[0] = 0;
+    yp_vel[1] = 0;
     YP_get_wheel_vel(&yp_vel[1], &yp_vel[0]);
     yp_vel[0] = -yp_vel[0];
 
@@ -96,7 +99,7 @@ int main(int argc, char **argv)
   ros::NodeHandle nh;
     
   TFrog robot;
-  ROS_WARN_STREAM("period: " << robot.getPeriod().toSec());
+  ROS_INFO_STREAM("period: " << robot.getPeriod().toSec());
   controller_manager::ControllerManager cm(&robot, nh);
 
   ros::Rate rate(1.0 / robot.getPeriod().toSec());
