@@ -15,12 +15,12 @@ namespace combine_dr_measurements{
     {
         odom_pub_ = nh_.advertise<nav_msgs::Odometry>("combined_odom", 5, this);
 
-        sync_.registerCallback(boost::bind(&OdometryPublisher::sync_msgs_cb, this, _1, _2));
+        sync_.registerCallback(boost::bind(&OdometryPublisher::syncMsgsCB, this, _1, _2));
         ros::NodeHandle private_nh("~");
         private_nh.param<double>("max_update_rate", max_update_rate_, 50);
     }
 
-    void OdometryPublisher::sync_msgs_cb(const nav_msgs::OdometryConstPtr &odom, const sensor_msgs::ImuConstPtr &imu){
+    void OdometryPublisher::syncMsgsCB(const nav_msgs::OdometryConstPtr &odom, const sensor_msgs::ImuConstPtr &imu){
         received_odom_ = *odom;
         received_imu_ = *imu;
     }

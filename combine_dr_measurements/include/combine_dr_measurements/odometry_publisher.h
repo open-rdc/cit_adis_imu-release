@@ -14,7 +14,7 @@ namespace combine_dr_measurements{
     class OdometryPublisher{
     public:
         OdometryPublisher(ros::NodeHandle &nh);
-        void sync_msgs_cb(const nav_msgs::OdometryConstPtr &odom, const sensor_msgs::ImuConstPtr &imu);
+        void syncMsgsCB(const nav_msgs::OdometryConstPtr &odom, const sensor_msgs::ImuConstPtr &imu);
         void run();
 
     private:
