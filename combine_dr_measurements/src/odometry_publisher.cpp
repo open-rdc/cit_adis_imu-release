@@ -11,7 +11,7 @@ namespace combine_dr_measurements{
         nh_(nh),
         odom_sub_(nh, "odom", 1),
         imu_sub_(nh, "imu", 1),
-        sync_(SyncPolicy(100), odom_sub_, imu_sub_)
+        sync_(SyncPolicy(10), odom_sub_, imu_sub_)
     {
         odom_pub_ = nh_.advertise<nav_msgs::Odometry>("combined_odom", 5, this);
 
