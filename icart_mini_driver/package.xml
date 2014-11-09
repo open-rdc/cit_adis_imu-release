@@ -36,6 +36,7 @@
   <run_depend>roscpp</run_depend>
   <run_depend>teleop_twist_joy</run_depend>
   <run_depend>joy</run_depend>
+  <run_depend>hokuyo_node</run_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
