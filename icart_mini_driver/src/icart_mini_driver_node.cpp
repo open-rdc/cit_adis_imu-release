@@ -20,8 +20,8 @@ public:
       ROS_WARN_STREAM("ERROR : cannot open spur.\n");
     }
 
-    YP_set_wheel_vel(15.0, 15.0);
-    YP_set_wheel_accel(15.0, 15.0);
+    YP_set_wheel_vel(8.0, 8.0);
+    YP_set_wheel_accel(13.0, 13.0);
 
     pos_[0] = 0.0; pos_[1] = 0.0;
     vel_[0] = 0.0; vel_[1] = 0.0;
@@ -59,8 +59,8 @@ public:
     Spur_free();
     //ros::Duration(0.5).sleep();
     Spur_init();
-    YP_set_wheel_vel(15.0, 15.0);
-    YP_set_wheel_accel(15.0, 15.0);
+    YP_set_wheel_vel(8.0, 8.0);
+    YP_set_wheel_accel(13.0, 13.0);
   }
 
   void read(){
