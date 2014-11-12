@@ -20,7 +20,7 @@ public:
       ROS_WARN_STREAM("ERROR : cannot open spur.\n");
     }
 
-    YP_set_wheel_vel(8.0, 8.0);
+    YP_set_wheel_vel(13.0, 13.0);
     YP_set_wheel_accel(13.0, 13.0);
 
     pos_[0] = 0.0; pos_[1] = 0.0;
@@ -47,7 +47,8 @@ public:
 
   ~TFrog(){
     Spur_stop();
-    usleep(40000000);
+    ros::Duration(1);
+    //usleep(40000000);
     Spur_free();
   }
 
@@ -57,14 +58,13 @@ public:
   void reopen(){
     YP_wheel_vel(0, 0);
     Spur_free();
-    //ros::Duration(0.5).sleep();
     Spur_init();
-    YP_set_wheel_vel(8.0, 8.0);
+    YP_set_wheel_vel(13.0, 13.0);
     YP_set_wheel_accel(13.0, 13.0);
   }
 
   void read(){
-    //ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << -cmd_[1]);
+    ROS_INFO_STREAM("Commands for joints: " << cmd_[0] << ", " << -cmd_[1]);
     int ret = YP_wheel_vel(cmd_[1], -cmd_[0]);
   }
 
@@ -110,6 +110,7 @@ int main(int argc, char **argv)
   while(ros::ok())
   {
     int state = YP_get_error_state();
+    
     if(state == 0){
         robot.read();
         robot.write();
