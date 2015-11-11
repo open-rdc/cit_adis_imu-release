@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package>
+  <name>cit_adis_imu</name>
+  <version>0.0.2</version>
+  <description>cit_adis_imu for ADIS IMUs with the interface board made by Chiba Institute of Technology.</description>
+
+  <maintainer email="d.maekawa@rapyuta-robotics.com">Daiki Maekawa</maintainer>
+
+  <license>BSD</license>
+
+  <author email="aibotaro@gmail.com">Kazuya Natsusako</author>
+  <author email="d.maekawa@rapyuta-robotics.com">Daiki Maekawa</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>tf</build_depend>
+  <build_depend>std_srvs</build_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>tf</run_depend>
+  <build_depend>std_srvs</build_depend>
+
+  <export>
+  </export>
+</package>
